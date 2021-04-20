@@ -64,9 +64,9 @@ func Execute() {
 }
 
 func init() {
-	shells = []string{"bash", "zsh", "fish", "powershell"}
 	cobra.OnInitialize(initConfig)
 
+	shells = []string{"bash", "zsh", "fish", "powershell"}
 	rootCmd.SilenceUsage = true
 	rootCmd.SilenceErrors = true
 

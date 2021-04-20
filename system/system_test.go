@@ -29,8 +29,8 @@ func TestPrependArgument(t *testing.T) {
 }
 
 func TestGetDeviceID(t *testing.T) {
-	echoName := "Echo Plus-CNX"
-	expectedID := "38:F7:3D:6C:B6:7A"
+	echoName := "Tribit XFree Tune"
+	expectedID := "AC:18:12:00:65:FC"
 	echoID, err := GetDeviceID(echoName)
 	fmt.Println(echoID)
 

@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-		http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,11 +20,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// connectCmd represents the connect command
-var connectCmd = &cobra.Command{
-	Use:   "connect",
-	Short: "<device>: connect to a device",
-	Long:  `<device>: connect to a device`,
+// disconnectCmd represents the disconnect command
+var disconnectCmd = &cobra.Command{
+	Use:   "disconnect",
+	Short: "<device>: disconnect from a device",
+	Long:  `<device>: disconnect from a device`,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		return system.CheckIfArgumentIsDevice(args)
 	},
@@ -33,7 +33,7 @@ var connectCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		err = system.Bluetoothctl([]string{"connect", deviceID})
+		err = system.Bluetoothctl([]string{"disconnect", deviceID})
 		if err != nil {
 			return err
 		}
@@ -45,9 +45,9 @@ var connectCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(connectCmd)
+	rootCmd.AddCommand(disconnectCmd)
 	system.GetDevicesFromConfig()
 
-	// connectCmd.PersistentFlags().String("foo", "", "A help for foo")
-	// connectCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// disconnectCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// disconnectCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
