@@ -4,6 +4,7 @@ pkgname="bt"
 build:
 	go mod tidy
 	go build -o "${pkgname}" main.go
+	sudo mkdir -p /etc/bash_completion.d
 	./"${pkgname}" --completion bash | sudo tee /etc/bash_completion.d/"${pkgname}" > /dev/null
 	sudo cp ./"${pkgname}" "${GOROOT}"/bin/"${pkgname}"
 
