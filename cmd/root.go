@@ -71,6 +71,7 @@ func init() {
 	shells = []string{"bash", "zsh", "fish", "powershell"}
 	rootCmd.SilenceUsage = true
 	rootCmd.SilenceErrors = true
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
 
 	completionFlag := "completion"
 	rootCmd.PersistentFlags().StringVar(&completion, completionFlag, "", "generate shell completion")
