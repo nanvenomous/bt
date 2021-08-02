@@ -18,10 +18,12 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path"
 
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mrgarelli/kik"
 	"github.com/spf13/viper"
 )
 
@@ -60,7 +62,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	cobra.CheckErr(rootCmd.Execute())
+	kik.FailIf(rootCmd.Execute(), 1)
 }
 
 func init() {
@@ -71,12 +73,12 @@ func init() {
 	rootCmd.SilenceErrors = true
 
 	completionFlag := "completion"
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.bt.yaml)")
 	rootCmd.PersistentFlags().StringVar(&completion, completionFlag, "", "generate shell completion")
 	rootCmd.RegisterFlagCompletionFunc(completionFlag, func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		return shells, cobra.ShellCompDirectiveDefault
 	})
 
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/bt.yaml)")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
@@ -90,11 +92,11 @@ func initConfig() {
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
-		cobra.CheckErr(err)
+		kik.FailIf(err, 1)
 
 		// Search config in home directory with name ".bt" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".bt")
+		viper.AddConfigPath(path.Join(home, ".config"))
+		viper.SetConfigName("bt")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

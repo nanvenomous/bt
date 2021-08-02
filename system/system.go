@@ -10,7 +10,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/spf13/cobra"
+	"github.com/mrgarelli/kik"
 	"gopkg.in/yaml.v2"
 )
 
@@ -37,12 +37,12 @@ func CheckIfArgumentIsDevice(args []string) error {
 
 func GetDevicesFromConfig() {
 	usr, err := user.Current()
-	cobra.CheckErr(err)
+	kik.FailDebugIf(err, 1)
 	confPath := path.Join(usr.HomeDir, ".config", "bt.yaml")
 	confFile, err := ioutil.ReadFile(confPath)
-	cobra.CheckErr(err)
+	kik.FailDebugIf(err, 1)
 	err = yaml.Unmarshal(confFile, &C)
-	cobra.CheckErr(err)
+	kik.FailDebugIf(err, 1)
 
 	DeviceNames = make([]string, len(C.Devices))
 	i := 0
